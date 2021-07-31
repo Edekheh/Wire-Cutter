@@ -1,5 +1,5 @@
 #include "setup_routine.h"
-
+#pragma once
 void cascadeJoystickUpdateY()
 {
     if (yPosition >= 600)
