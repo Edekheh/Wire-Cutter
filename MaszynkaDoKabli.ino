@@ -1,35 +1,9 @@
-#include <Servo.h>
-#include <Wire.h>
-#include <LiquidCrystal_I2C.h>
-#include <Stepper.h>
 
-const int stepsPerRevolution = 3200;
-Stepper Motor_wire_extruder(stepsPerRevolution,5,6);
-Stepper Motor_wire_cutter(stepsPerRevolution,3,4);
 
-LiquidCrystal_I2C lcd(0x27, 20, 4); // set the LCD address to 0x27 for a 16 chars and 2 line display
+#include "setup_routine.h"
 
-//global variables
-int VRx = A0;
-int VRy = A1;
-int SW = 2;
-int xPosition = 0;
-int yPosition = 0;
-int SW_state = 0;
-int wireLength = 30;//cm
-int menuNumber = 0;
-int leftIsolationRemove = 8; //mm
-int rightIsolationRemove = 8; //mm
-int wiresNumber = 1; //how much wires to cut and strip
-bool menuSwitch=0;
-bool cycleStart=0;
-double lengthPerStep=10.25;//10mm per one motor revolution
-double numberOfSteppsToCut_CUTTER=3;//3 motor revolutions to cut wire
-double stepsForRemoveRightIsolation=0;
-double stepsForRemoveleftIsolation=0;
-double stepsForCutTheWire_EXTRUDER=0;
 
-Servo MOTOR_switcher;
+
 
 void setup()
 {
@@ -74,33 +48,8 @@ void servoMove()  {
   MOTOR_switcher.write(120);
   delay(1000);
 }
-void setUpRoutine() {
-  Serial.begin(9600);
-  Motor_wire_extruder.setSpeed(60);
-  Motor_wire_cutter.setSpeed(60);
-  pinMode(VRx, INPUT);
-  pinMode(VRy, INPUT);
-  pinMode(SW, INPUT_PULLUP);
-  MOTOR_switcher.attach(9);
-  MOTOR_switcher.write(90);  // set servo to mid-point
-  lcd.init();                      // initialize the lcd
-  lcd.init();
-  // Print a message to the LCD.
-  lcd.backlight();
-  helloScreen();
-  while(1)  {
-    SW_state = digitalRead(SW);
-    if(!SW_state)break;
-  }
-  menuSwitch=1;
-}
-void printOnLCD(String line1, String line2)  {
-  lcd.clear();
-  lcd.setCursor(1, 0);
-  lcd.print(line1);
-  lcd.setCursor(1, 1);
-  lcd.print(line2);
-}
+
+
 void joystickCommander() {
 
 }
@@ -164,9 +113,7 @@ void joystickRoutine()  {
     }
   }
 }
-void helloScreen()  {
-  printOnLCD("Witaj, dzialam", "Kliknij ...");
-}
+
 
 void openWireCutter() {
   Motor_wire_cutter.step(numberOfSteppsToCut_CUTTER);
