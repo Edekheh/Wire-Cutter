@@ -8,11 +8,26 @@ void setup()
 void loop() {
   joystickRoutine();
   printMenu();
-  Serial.println(xPosition);
+  startProgramCycle();
+  /* Joystick testing
+  Serial.print("X : ");
+  Serial.print(xPosition);
+  Serial.print("  Y : ");
   Serial.println(yPosition);
+  */
 }
 void startProgramCycle(){
-  printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
+  if(!SW_state && menuNumber==4)  {
+    printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
+  for(wiresNumber;wiresNumber>=0;wiresNumber--) {
+    singleCutLoop();
+    printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
+  }
+  printOnLCD("Zrobione !!!","Jazda dalej?");
+  while(SW_state);
+  menuNumber=0;
+  }
+
 }
 void servoMove()  {
   MOTOR_switcher.write(90);
