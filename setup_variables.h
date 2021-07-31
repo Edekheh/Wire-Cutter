@@ -2,7 +2,8 @@
 #define VRx A0
 #define VRy A1
 #define SW 2
-const int stepsPerRevolution = 3200;
+const int stepsPerRevolution = 800;
+int updateDelayForSettingValues=200;
 int xPosition = 0;
 int yPosition = 0;
 int SW_state = 0;
