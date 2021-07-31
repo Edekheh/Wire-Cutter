@@ -1,12 +1,11 @@
 #include "menu.h"
-
+#include "mathControl.h"
 void servoMove()  {
   MOTOR_switcher.write(90);
   delay(500);
   MOTOR_switcher.write(120);
   delay(500);
 }
-
 void openWireCutter() {
   Motor_wire_cutter.step(numberOfSteppsToCut_CUTTER);
   delay(1*numberOfSteppsToCut_CUTTER/stepsPerRevolution);//wait on end
@@ -23,11 +22,19 @@ void cutTheWire() {
   delay(250);
   openWireCutter();
 }
+void closeWireStripper()    {
+    Motor_wire_cutter.step(-numberOfSteppsToStrip_CUTTER);
+  delay(1*numberOfSteppsToStrip_CUTTER/stepsPerRevolution);//wait on end
+}
+void openWireStripper() {
+    Motor_wire_cutter.step(numberOfSteppsToStrip_CUTTER);
+  delay(1*numberOfSteppsToStrip_CUTTER/stepsPerRevolution);//wait on end
+}
 void removeIsolationFromWire()  {
-  closeWireCutter();
-  delay(1*numberOfSteppsToCut_CUTTER/stepsPerRevolution);//wait on end
-  openWireCutter();
-  delay(1*numberOfSteppsToCut_CUTTER/stepsPerRevolution);//wait on end
+  closeWireStripper();
+  delay(1*numberOfSteppsToStrip_CUTTER/stepsPerRevolution);//wait on end
+  openWireStripper();
+  delay(1*numberOfSteppsToStrip_CUTTER/stepsPerRevolution);//wait on end
 }
 void extrudeWire(double lengthOfWire)  {
   Motor_wire_extruder.step(lengthOfWire);

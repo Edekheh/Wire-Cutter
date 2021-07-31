@@ -3,6 +3,8 @@
 #define VRy A1
 #define SW 2
 const int stepsPerRevolution = 800;
+const int numberOfDifferentMenus=5;
+const int pitchScrew = 4;
 int updateDelayForSettingValues=200;
 int xPosition = 0;
 int yPosition = 0;
@@ -14,8 +16,4 @@ int rightIsolationRemove = 8; //mm
 int wiresNumber = 1; //how much wires to cut and strip
 bool menuSwitch=0;
 bool cycleStart=0;
-double lengthPerStep=10.25;//10mm per one motor revolution
-double numberOfSteppsToCut_CUTTER=3;//3 motor revolutions to cut wire
-double stepsForRemoveRightIsolation=0;
-double stepsForRemoveLeftIsolation=0;
-double stepsForCutTheWire_EXTRUDER=0;
+float wireDiameter = 0.5;

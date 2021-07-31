@@ -17,7 +17,8 @@ void loop() {
   */
 }
 void startProgramCycle(){
-  if(!SW_state && menuNumber==4)  {
+  if(!SW_state && menuNumber==5)  {
+    calculateStepps();//#important
     printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
   for(wiresNumber;wiresNumber>=0;wiresNumber--) {
     singleCutLoop();

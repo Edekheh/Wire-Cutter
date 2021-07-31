@@ -22,7 +22,12 @@ void cascadeJoystickUpdateY()
                 case 2:
                     rightIsolationRemove++;
                     break;
+                case 3:
                     wiresNumber++;
+                    break;
+                case 4:
+                    wireDiameter+=0.05;
+                    if(wireDiameter>=3) wireDiameter=3;
                     break;
                 default:
                     printOnLCD("ERROR", "FATAL ERROR");
@@ -62,6 +67,10 @@ void cascadeJoystickUpdateY()
                     if (wiresNumber <= 0)
                         wiresNumber = 0;
                     break;
+                case 4:
+                    wireDiameter-=0.05;
+                    if(wireDiameter<=0) wireDiameter=0;
+                    break;
                 default:
                     printOnLCD("ERROR", "FATAL ERROR");
                     break;
@@ -76,8 +85,8 @@ void JoystickUpdateX()  {
     if(xPosition>=800)  {
         menuNumber++;
         delay(500);
-        if (menuNumber >= 5)
-            menuNumber = 4;
+        if (menuNumber >= numberOfDifferentMenus)
+            menuNumber = numberOfDifferentMenus;
         else
             menuSwitch = 1;
     }
@@ -90,7 +99,7 @@ void JoystickUpdateX()  {
         else
             menuSwitch = 1;
     }
-    else if (!SW_state && menuNumber == 4)
+    else if (!SW_state && menuNumber == numberOfDifferentMenus)
         cycleStart = 1;
 }
 void joystickRoutine()
@@ -119,6 +128,9 @@ void switchMenu()
         printOnLCD("Ilosc sztuk", "kabla " + String(wiresNumber));
         break;
     case 4:
+        printOnLCD("Grubosc kabla","Wartosc :"+String(wireDiameter));
+        break;
+    case 5:
         printOnLCD("Kliknij, aby", "wykonac ..." + String(wiresNumber));
         break;
     default:
