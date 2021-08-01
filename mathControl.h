@@ -1,6 +1,6 @@
 //global variables
 
-double lengthPerStep_EXTRUDER=6;//6mm per one motor revolution
+double lengthPerStep_EXTRUDER=32.5;//325mm per one motor revolution
 double numberOfSteppsToCut_CUTTER=2400;
 double stepsForRemoveRightIsolation=0;
 double stepsForRemoveLeftIsolation=0;
@@ -14,7 +14,22 @@ void calculateStepps()  {
     else if(0.5<wireDiameter)   {
         numberOfSteppsToStrip_CUTTER-=(wireDiameter-0.5)*stepsPerRevolution/pitchScrew;
     }
-    stepsForRemoveLeftIsolation=leftIsolationRemove*lengthPerStep_EXTRUDER*stepsPerRevolution;
-    stepsForRemoveRightIsolation=wireLength*10*lengthPerStep_EXTRUDER*stepsPerRevolution;
-    stepsForCutTheWire_EXTRUDER=rightIsolationRemove*lengthPerStep_EXTRUDER*stepsPerRevolution;
+    stepsForRemoveLeftIsolation=leftIsolationRemove*stepsPerRevolution/lengthPerStep_EXTRUDER;
+    Serial.print("LEWA : ");
+    Serial.println(stepsForRemoveLeftIsolation);
+    Serial.print("dlugosc : ");
+    Serial.println(wireLength);
+    Serial.print("stepy :");
+    Serial.println(stepsPerRevolution);
+    Serial.print("lengthPerCostam");
+    Serial.println(lengthPerStep_EXTRUDER);
+    
+    Serial.print("SRODEK : ");
+    stepsForRemoveRightIsolation=wireLength*10*stepsPerRevolution/lengthPerStep_EXTRUDER;
+
+    Serial.println(stepsForRemoveRightIsolation);
+    stepsForCutTheWire_EXTRUDER=rightIsolationRemove*stepsPerRevolution/lengthPerStep_EXTRUDER;
+    Serial.print("PRAWA : ");
+
+    Serial.println(stepsForCutTheWire_EXTRUDER);
 }

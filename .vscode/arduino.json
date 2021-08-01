@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
     "sketch": "MaszynkaDoKabli.ino",
-    "port": "COM11"
+    "port": "COM3"
 }

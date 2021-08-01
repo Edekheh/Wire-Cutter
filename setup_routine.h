@@ -27,8 +27,8 @@ void helloScreen()  {
 
 void setUpRoutine() {
   Serial.begin(9600);
-  Motor_wire_extruder.setSpeed(60);
-  Motor_wire_cutter.setSpeed(60);
+  Motor_wire_extruder.setSpeed(360);
+  Motor_wire_cutter.setSpeed(360);
   pinMode(VRx, INPUT);
   pinMode(VRy, INPUT);
   pinMode(SW, INPUT_PULLUP);
