@@ -19,8 +19,10 @@ void loop() {
 void startProgramCycle(){
   if(!SW_state && menuNumber==5)  {
     calculateStepps();//#important
+  openWireCutter();
+
     printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
-  for(wiresNumber;wiresNumber>=0;wiresNumber--) {
+  for(wiresNumber;wiresNumber>0;wiresNumber--) {
     singleCutLoop();
     printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
   }

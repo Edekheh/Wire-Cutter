@@ -1,53 +1,63 @@
 #include "menu.h"
 #include "mathControl.h"
-void servoMove()  {
-  MOTOR_switcher.write(90);
-  delay(500);
-  MOTOR_switcher.write(120);
-  delay(500);
+void driveMotor(double steps, int pinDirection, int pinStepps, bool dir)
+{
+  int czekanie = 1000;
+  Serial.print("ILE KROKOW : ");
+  Serial.println(steps);
+  if (dir)
+    digitalWrite(pinDirection, HIGH);
+  else
+    digitalWrite(pinDirection, LOW);
+  if (pinStepps == 3)
+  {
+    czekanie = 250;
+  }
+  for (double i = 0; i < steps; i++)
+  {
+    digitalWrite(pinStepps, HIGH);
+    delayMicroseconds(czekanie);
+    digitalWrite(pinStepps, LOW);
+    delayMicroseconds(czekanie);
+  }
 }
-void openWireCutter() {
-  Motor_wire_cutter.step(numberOfSteppsToCut_CUTTER);
-  delay(1*numberOfSteppsToCut_CUTTER/stepsPerRevolution);//wait on end
+void openWireCutter()
+{
+  driveMotor(numberOfSteppsToCut_CUTTER, 3, 4, 1);
 }
-void closeWireCutter()  {
-  Motor_wire_cutter.step(-numberOfSteppsToCut_CUTTER);
-  delay(1*numberOfSteppsToCut_CUTTER/stepsPerRevolution);//wait on end
+void closeWireCutter()
+{
+  driveMotor(numberOfSteppsToCut_CUTTER, 3, 4, 0);
 }
-void cutTheWire() {
-  MOTOR_switcher.write(60);
-  delay(250);
+void cutTheWire()
+{
   closeWireCutter();
-  MOTOR_switcher.write(90);
-  delay(250);
   openWireCutter();
 }
-void closeWireStripper()    {
-    Motor_wire_cutter.step(-numberOfSteppsToStrip_CUTTER);
-  delay(1*numberOfSteppsToStrip_CUTTER/stepsPerRevolution);//wait on end
+void closeWireStripper()
+{
+  driveMotor(numberOfSteppsToStrip_CUTTER, 3, 4, 0);
 }
-void openWireStripper() {
-    Motor_wire_cutter.step(numberOfSteppsToStrip_CUTTER);
-  delay(1*numberOfSteppsToStrip_CUTTER/stepsPerRevolution);//wait on end
+void openWireStripper()
+{
+  driveMotor(numberOfSteppsToStrip_CUTTER, 3, 4, 1);
 }
-void removeIsolationFromWire()  {
+void removeIsolationFromWire()
+{
   closeWireStripper();
-  delay(1*numberOfSteppsToStrip_CUTTER/stepsPerRevolution);//wait on end
   openWireStripper();
-  delay(1*numberOfSteppsToStrip_CUTTER/stepsPerRevolution);//wait on end
 }
-void extrudeWire(double lengthOfWire)  {
-  Motor_wire_extruder.step(lengthOfWire);
-  delay(1*lengthOfWire/stepsPerRevolution);//wait on end
+void extrudeWire(double lengthOfWire)
+{
+  driveMotor(lengthOfWire, 5, 6, 0);
 }
-void singleCutLoop() {
-  //extrude length of right isolation removal
-  
-  extrudeWire(stepsForRemoveRightIsolation);
-  removeIsolationFromWire();
+void singleCutLoop()
+{
   extrudeWire(stepsForRemoveLeftIsolation);
+  removeIsolationFromWire();
+  extrudeWire(stepsForRemoveRightIsolation);
+
   removeIsolationFromWire();
   extrudeWire(stepsForCutTheWire_EXTRUDER);
   cutTheWire();
 }
-
