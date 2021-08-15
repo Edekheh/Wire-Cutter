@@ -10,4 +10,10 @@ void calculateStepps()
 {
     numberOfSteppsToStrip_CUTTER = stepsPerRevolution * 2.25; //for 0.5 mm wire
     numberOfSteppsToCut_CUTTER = stepsPerRevolution * 3;      //for 0.5mm wire
+    if(wireDiameter>0.5)    {
+        numberOfSteppsToStrip_CUTTER-=(wireDiameter/0.05-10)*2.5;//some weird math
+    }
+    else if(wireDiameter<0.5)    {
+        numberOfSteppsToStrip_CUTTER+=(10-wireDiameter/0.05)*2.5;//some weird math
+    }
 }

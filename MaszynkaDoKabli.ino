@@ -35,6 +35,7 @@ void startProgramCycle()
       printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
     }
     printOnLCD("Zrobione !!!", "Jazda dalej?");
+    joystickRoutine();
     while (SW_state)
       ;
     menuNumber = 0;
