@@ -3,9 +3,12 @@
 void setup()
 {
   setUpRoutine();
+  pinMode(8, OUTPUT);
+  digitalWrite(8, LOW);
 }
 
-void loop() {
+void loop()
+{
   joystickRoutine();
   printMenu();
   startProgramCycle();
@@ -16,19 +19,22 @@ void loop() {
   Serial.println(yPosition);
   */
 }
-void startProgramCycle(){
-  if(!SW_state && menuNumber==5)  {
-    calculateStepps();//#important
-  openWireCutter();
-
+void startProgramCycle()
+{
+  if (!SW_state && menuNumber == 5)
+  {
+    //calculateStepps(); //#important
     printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
-  for(wiresNumber;wiresNumber>0;wiresNumber--) {
-    singleCutLoop();
-    printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
-  }
-  printOnLCD("Zrobione !!!","Jazda dalej?");
-  while(SW_state);
-  menuNumber=0;
-  }
+    driveWireCutter(stepsPerRevolution*3,0);
 
+    for (wiresNumber; wiresNumber > 0; wiresNumber--)
+    {
+      singleCutLoop();
+      printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
+    }
+    printOnLCD("Zrobione !!!", "Jazda dalej?");
+    while (SW_state)
+      ;
+    menuNumber = 0;
+  }
 }

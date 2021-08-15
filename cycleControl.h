@@ -1,63 +1,41 @@
 #include "menu.h"
 #include "mathControl.h"
-void driveMotor(double steps, int pinDirection, int pinStepps, bool dir)
+
+void driveExtruder(int numberOfSteppsForMotor)
 {
-  int czekanie = 1000;
-  Serial.print("ILE KROKOW : ");
-  Serial.println(steps);
-  if (dir)
-    digitalWrite(pinDirection, HIGH);
+  digitalWrite(dirPinExtruder, HIGH);
+  for (int i = 0; i < numberOfSteppsForMotor; i++)
+  {
+    digitalWrite(stepPinExtruder, HIGH);
+    delayMicroseconds(500);
+    digitalWrite(stepPinExtruder, LOW);
+    delayMicroseconds(500);
+  }
+} //2 aby obrac 3 aby uciac
+void driveWireCutter(int numberOfSteppsForMotor, bool directionToMove)
+{
+  if (directionToMove)
+    digitalWrite(dirPinCutter, HIGH);
   else
-    digitalWrite(pinDirection, LOW);
-  if (pinStepps == 3)
+    digitalWrite(dirPinCutter, LOW);
+
+  for (int i = 0; i < numberOfSteppsForMotor; i++)
   {
-    czekanie = 250;
+    digitalWrite(stepPinCutter, HIGH);
+    delayMicroseconds(500);
+    digitalWrite(stepPinCutter, LOW);
+    delayMicroseconds(500);
   }
-  for (double i = 0; i < steps; i++)
-  {
-    digitalWrite(pinStepps, HIGH);
-    delayMicroseconds(czekanie);
-    digitalWrite(pinStepps, LOW);
-    delayMicroseconds(czekanie);
-  }
-}
-void openWireCutter()
-{
-  driveMotor(numberOfSteppsToCut_CUTTER, 3, 4, 1);
-}
-void closeWireCutter()
-{
-  driveMotor(numberOfSteppsToCut_CUTTER, 3, 4, 0);
-}
-void cutTheWire()
-{
-  closeWireCutter();
-  openWireCutter();
-}
-void closeWireStripper()
-{
-  driveMotor(numberOfSteppsToStrip_CUTTER, 3, 4, 0);
-}
-void openWireStripper()
-{
-  driveMotor(numberOfSteppsToStrip_CUTTER, 3, 4, 1);
-}
-void removeIsolationFromWire()
-{
-  closeWireStripper();
-  openWireStripper();
-}
-void extrudeWire(double lengthOfWire)
-{
-  driveMotor(lengthOfWire, 5, 6, 0);
 }
 void singleCutLoop()
 {
-  extrudeWire(stepsForRemoveLeftIsolation);
-  removeIsolationFromWire();
-  extrudeWire(stepsForRemoveRightIsolation);
-
-  removeIsolationFromWire();
-  extrudeWire(stepsForCutTheWire_EXTRUDER);
-  cutTheWire();
+  driveExtruder((stepsPerRevolution / lengthPerStep_EXTRUDER) * leftIsolationRemove);
+  driveWireCutter(stepsPerRevolution*2.25,1);
+  driveWireCutter(stepsPerRevolution*2.25,0);
+  driveExtruder((stepsPerRevolution / lengthPerStep_EXTRUDER) * wireLength * 10);
+  driveWireCutter(stepsPerRevolution*2.25,1);
+  driveWireCutter(stepsPerRevolution*2.25,0);
+  driveExtruder((stepsPerRevolution / lengthPerStep_EXTRUDER) * rightIsolationRemove);
+  driveWireCutter(stepsPerRevolution*3,1);
+  driveWireCutter(stepsPerRevolution*3,0);
 }
