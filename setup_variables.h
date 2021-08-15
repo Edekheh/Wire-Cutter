@@ -21,3 +21,4 @@ int wiresNumber = 1;             //how much wires to cut and strip
 bool menuSwitch = 0;
 bool cycleStart = 0;
 double wireDiameter = 0.5;
+bool firstRun = 1;

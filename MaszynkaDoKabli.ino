@@ -23,9 +23,11 @@ void startProgramCycle()
 {
   if (!SW_state && menuNumber == 5)
   {
-    //calculateStepps(); //#important
     printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
-    driveWireCutter(stepsPerRevolution*3,0);
+    if(firstRun)  {
+    driveWireCutter(stepsPerRevolution * 3, 0);
+      firstRun=0;
+    }
 
     for (wiresNumber; wiresNumber > 0; wiresNumber--)
     {

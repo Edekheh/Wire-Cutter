@@ -110,6 +110,7 @@ void joystickRoutine()
 {
     xPosition = analogRead(VRx);
     yPosition = analogRead(VRy);
+    yPosition=1023-yPosition;//reverse logic
     SW_state = digitalRead(SW);
     cascadeJoystickUpdateY();
     JoystickUpdateX();
