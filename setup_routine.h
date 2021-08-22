@@ -23,6 +23,7 @@ void setUpRoutine()
   pinMode(VRx, INPUT);
   pinMode(VRy, INPUT);
   pinMode(SW, INPUT_PULLUP);
+  pinMode(endStopPin,INPUT);
   pinMode(stepPinExtruder, OUTPUT);
   pinMode(dirPinExtruder, OUTPUT);
   pinMode(stepPinCutter, OUTPUT);

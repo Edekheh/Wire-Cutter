@@ -5,6 +5,7 @@ void setup()
   setUpRoutine();
   pinMode(8, OUTPUT);
   digitalWrite(8, LOW);
+  calibration();
 }
 
 void loop()
@@ -44,12 +45,13 @@ void startProgramCycle()
   }
 }
 void calibration()  {
-  printOnLCD("Trwa bazowanie",".............");
+  printOnLCD("Trwa bazowanie","...............");
   digitalWrite(dirPinCutter, HIGH);
   while(digitalRead(endStopPin))  {
     digitalWrite(stepPinCutter, HIGH);
     delayMicroseconds(500);
     digitalWrite(stepPinCutter, LOW);
     delayMicroseconds(500);
+    Serial.println(digitalRead(endStopPin));
   }
 }
