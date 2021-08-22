@@ -39,7 +39,6 @@ void setUpRoutine()
       break;
   }
   menuSwitch = 1;
-
   pinMode(8, OUTPUT);
   digitalWrite(8, LOW);
 }

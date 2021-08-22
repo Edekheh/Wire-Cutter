@@ -6,6 +6,7 @@ const int stepPinExtruder = 2; //X.STEP
 const int dirPinExtruder = 5;  // X.DIR
 const int stepPinCutter = 3;
 const int dirPinCutter = 6;
+const int endStopPin=8;//TODO
 int stepsPerRevolution = 200;
 const int numberOfDifferentMenus = 5;
 const int pitchScrew = 4;

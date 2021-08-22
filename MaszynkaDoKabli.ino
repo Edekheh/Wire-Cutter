@@ -23,9 +23,10 @@ void startProgramCycle()
 {
   if (!SW_state && menuNumber == 5)
   {
+    void calculateStepps();//lets calculate some numbers
     printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
     if(firstRun)  {
-    driveWireCutter(stepsPerRevolution * 3, 0);
+    driveWireCutter(stepsPerRevolution * 4, 0);
       firstRun=0;
     }
 
@@ -35,9 +36,20 @@ void startProgramCycle()
       printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
     }
     printOnLCD("Zrobione !!!", "Jazda dalej?");
-    joystickRoutine();
-    while (SW_state)
-      ;
+    while (SW_state)  {
+          joystickRoutine();
+
+    }
     menuNumber = 0;
+  }
+}
+void calibration()  {
+  printOnLCD("Trwa bazowanie",".............");
+  digitalWrite(dirPinCutter, HIGH);
+  while(digitalRead(endStopPin))  {
+    digitalWrite(stepPinCutter, HIGH);
+    delayMicroseconds(500);
+    digitalWrite(stepPinCutter, LOW);
+    delayMicroseconds(500);
   }
 }
