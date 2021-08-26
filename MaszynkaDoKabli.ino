@@ -49,9 +49,9 @@ void calibration()  {
   digitalWrite(dirPinCutter, HIGH);
   while(digitalRead(endStopPin))  {
     digitalWrite(stepPinCutter, HIGH);
-    delayMicroseconds(500);
+    delayMicroseconds(600);
     digitalWrite(stepPinCutter, LOW);
-    delayMicroseconds(500);
+    delayMicroseconds(600);
     Serial.println(digitalRead(endStopPin));
   }
 }

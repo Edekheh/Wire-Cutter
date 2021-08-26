@@ -30,11 +30,11 @@ void driveWireCutter(int numberOfSteppsForMotor, bool directionToMove)
 void singleCutLoop()
 {
   driveExtruder((stepsPerRevolution / lengthPerRevolution_EXTRUDER) * leftIsolationRemove);
-  driveWireCutter(stepsPerRevolution*3.2,1);
-  driveWireCutter(stepsPerRevolution*3.2,0);
+  driveWireCutter(stepsPerRevolution*3.4,1);
+  driveWireCutter(stepsPerRevolution*3.4,0);
   driveExtruder((stepsPerRevolution / lengthPerRevolution_EXTRUDER) * wireLength);
-  driveWireCutter(stepsPerRevolution*3.2,1);
-  driveWireCutter(stepsPerRevolution*3.2,0);
+  driveWireCutter(stepsPerRevolution*3.4,1);
+  driveWireCutter(stepsPerRevolution*3.4,0);
   driveExtruder((stepsPerRevolution / lengthPerRevolution_EXTRUDER) * rightIsolationRemove);
   driveWireCutter(stepsPerRevolution*4,1);
   driveWireCutter(stepsPerRevolution*4,0);
