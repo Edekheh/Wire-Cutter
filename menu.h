@@ -4,13 +4,13 @@ void cascadeJoystickUpdateY()
 {
     if (yPosition >= 600)
     {
-        updateDelayForSettingValues = 200;
+        updateDelayForSettingValues = 250;
         if (yPosition >= 800)
         {
-            updateDelayForSettingValues = 100;
+            updateDelayForSettingValues = 50;
             if (yPosition >= 1000)
             {
-                updateDelayForSettingValues = 50;
+                updateDelayForSettingValues = 10;
             }
         }
         switch (menuNumber)
@@ -36,16 +36,18 @@ void cascadeJoystickUpdateY()
             printOnLCD("ERROR", "FATAL ERROR");
             break;
         }
+        delay(updateDelayForSettingValues);
+        menuSwitch = 1;
     }
     else if (yPosition <= 400)
     {
-        updateDelayForSettingValues = 200;
+        updateDelayForSettingValues = 250;
         if (yPosition <= 200)
         {
-            updateDelayForSettingValues = 100;
+            updateDelayForSettingValues = 50;
             if (yPosition <= 50)
             {
-                updateDelayForSettingValues = 50;
+                updateDelayForSettingValues = 5;
             }
         }
         switch (menuNumber)
@@ -79,16 +81,16 @@ void cascadeJoystickUpdateY()
             printOnLCD("ERROR", "FATAL ERROR");
             break;
         }
+        delay(updateDelayForSettingValues);
+        menuSwitch = 1;
     }
-    delay(updateDelayForSettingValues);
-    menuSwitch = 1;
 }
 void JoystickUpdateX()
 {
     if (xPosition >= 800)
     {
         menuNumber++;
-        delay(500);
+        delay(250);
         if (menuNumber >= numberOfDifferentMenus)
             menuNumber = numberOfDifferentMenus;
         else
@@ -97,11 +99,11 @@ void JoystickUpdateX()
     else if (xPosition <= 100)
     {
         menuNumber--;
-        delay(500);
+        delay(250);
         if (menuNumber <= 0)
             menuNumber = 0;
         else
-             menuSwitch = 1;
+            menuSwitch = 1;
     }
     else if (!SW_state && menuNumber == numberOfDifferentMenus)
         cycleStart = 1;
@@ -110,7 +112,7 @@ void joystickRoutine()
 {
     xPosition = analogRead(VRx);
     yPosition = analogRead(VRy);
-    yPosition=1023-yPosition;//reverse logic
+    yPosition = 1023 - yPosition; //reverse logic
     SW_state = digitalRead(SW);
     cascadeJoystickUpdateY();
     JoystickUpdateX();
