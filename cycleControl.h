@@ -1,5 +1,5 @@
 #include "menu.h"
-int stepsToStripStandardWire = 620; //0.5 wire
+int stepsToStripStandardWire = 330; //0.75 wire
 int lengthPerRevolution_EXTRUDER = 30;
 void driveExtruder(int numberOfSteppsForMotor)
 {
@@ -27,16 +27,27 @@ void driveWireCutter(int numberOfSteppsForMotor, bool directionToMove)
     delayMicroseconds(500);
   }
 }
+void checkWireDiameter()  {
+  if(wireDiameter == 0.75)  {
+    stepsToStripStandardWire=330;
+  }
+  else if(wireDiameter == 0.5)  {
+    stepsToStripStandardWire=370;
+  }
+  else if(wireDiameter == 1)  {
+   stepsToStripStandardWire=260;
+  }
+}
 void singleCutLoop()
 {
+  checkWireDiameter();
   driveExtruder((stepsPerRevolution / lengthPerRevolution_EXTRUDER) * leftIsolationRemove);
   driveWireCutter(stepsToStripStandardWire,1);
   driveWireCutter(stepsToStripStandardWire,0);
-  Serial.println((stepsPerRevolution / lengthPerRevolution_EXTRUDER) * (wireLength * 10 - leftIsolationRemove - rightIsolationRemove));
   driveExtruder((stepsPerRevolution / lengthPerRevolution_EXTRUDER) * (wireLength * 10 - leftIsolationRemove - rightIsolationRemove));
   driveWireCutter(stepsToStripStandardWire,1);
   driveWireCutter(stepsToStripStandardWire,0);
   driveExtruder((stepsPerRevolution / lengthPerRevolution_EXTRUDER) * rightIsolationRemove);
-  driveWireCutter(stepsPerRevolution*4,1);
-  driveWireCutter(stepsPerRevolution*4,0);
+  driveWireCutter(stepsPerRevolution*2.5,1);
+  driveWireCutter(stepsPerRevolution*2.5,0);
 }

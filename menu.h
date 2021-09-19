@@ -2,15 +2,16 @@
 #pragma once
 void cascadeJoystickUpdateY()
 {
+  updateDelayForSettingValues=250;
     if (yPosition >= 600)
     {
         updateDelayForSettingValues = 250;
         if (yPosition >= 800)
         {
-            updateDelayForSettingValues = 50;
+            updateDelayForSettingValues = 100;
             if (yPosition >= 1000)
             {
-                updateDelayForSettingValues = 10;
+                updateDelayForSettingValues = 25;
             }
         }
         switch (menuNumber)
@@ -28,7 +29,7 @@ void cascadeJoystickUpdateY()
             wiresNumber++;
             break;
         case 4:
-            wireDiameter += 0.05;
+            wireDiameter += 0.25;
             if (wireDiameter >= 3)
                 wireDiameter = 3;
             break;
@@ -36,18 +37,16 @@ void cascadeJoystickUpdateY()
             printOnLCD("ERROR", "FATAL ERROR");
             break;
         }
-        delay(updateDelayForSettingValues);
-        menuSwitch = 1;
     }
     else if (yPosition <= 400)
     {
         updateDelayForSettingValues = 250;
-        if (yPosition <= 200)
+        if (yPosition <= 250)
         {
             updateDelayForSettingValues = 50;
-            if (yPosition <= 50)
+            if (yPosition <= 100)
             {
-                updateDelayForSettingValues = 5;
+                updateDelayForSettingValues = 25;
             }
         }
         switch (menuNumber)
@@ -73,7 +72,7 @@ void cascadeJoystickUpdateY()
                 wiresNumber = 0;
             break;
         case 4:
-            wireDiameter -= 0.05;
+            wireDiameter -= 0.25;
             if (wireDiameter <= 0)
                 wireDiameter = 0;
             break;
@@ -81,9 +80,9 @@ void cascadeJoystickUpdateY()
             printOnLCD("ERROR", "FATAL ERROR");
             break;
         }
+    }
         delay(updateDelayForSettingValues);
         menuSwitch = 1;
-    }
 }
 void JoystickUpdateX()
 {

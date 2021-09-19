@@ -27,7 +27,7 @@ void startProgramCycle()
     void calculateStepps();//lets calculate some numbers
     printOnLCD("Wykonywanie ...", "zostalo " + String(wiresNumber));
     if(firstRun)  {
-    driveWireCutter(stepsPerRevolution * 4, 0);
+    driveWireCutter(stepsPerRevolution * 2.5, 0);
       firstRun=0;
     }
 

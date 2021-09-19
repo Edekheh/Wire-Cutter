@@ -21,5 +21,5 @@ int rightIsolationRemove = 8; //mm
 int wiresNumber = 1;             //how much wires to cut and strip
 bool menuSwitch = 0;
 bool cycleStart = 0;
-double wireDiameter = 0.5;
+double wireDiameter = 0.75;
 bool firstRun = 1;
